@@ -24,12 +24,23 @@ class _DetailScreenState extends State<DetailScreen> {
       ),
       body: ListView.builder(
         itemBuilder: (_, index) => ListTile(
-          title: Text(
-            widget.info[index]["name"] ?? "",
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+          title: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                widget.info[index]["name"] ?? "",
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Tooltip(
+                triggerMode: TooltipTriggerMode.tap,
+                message: widget.info[index]["cost"] ?? "",
+                child: const Icon(Icons.attach_money),
+              ),
+            ],
           ),
           subtitle: Text(
               "${widget.info[index]["description"] ?? ""}\n 위치 : ${widget.info[index]["address"] ?? ""}\n비용: ${widget.info[index]["cost"] ?? ""}"),
