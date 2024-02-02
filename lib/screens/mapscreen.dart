@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:travel_korea_app/screens/detail_screen.dart';
+import 'dart:convert';
 
 const List<String?> cityList = [
   null,
@@ -24,6 +26,20 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
+  Map<String, dynamic> info = {};
+
+  List<bool> cityCheckList = List<bool>.generate(cityList.length, (_) => false);
+
+  @override
+  void initState() {
+    super.initState();
+    DefaultAssetBundle.of(context)
+        .loadString("assets/json/info.json")
+        .then((data) {
+      info = jsonDecode(data);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +64,7 @@ class _MapScreenState extends State<MapScreen> {
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: AssetImage('assets/images/map3.png'),
+                  image: AssetImage('assets/images/map4.png'),
                 ),
               ),
               child: GridView.builder(
@@ -61,7 +77,16 @@ class _MapScreenState extends State<MapScreen> {
                 ),
                 itemBuilder: (context, index) => cityList[index] != null
                     ? InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => DetailScreen(
+                                city: cityList[index]!,
+                                info: info[cityList[index]!],
+                              ),
+                            ),
+                          );
+                        },
                         borderRadius: BorderRadius.circular(30),
                         child: Container(
                           decoration: BoxDecoration(
