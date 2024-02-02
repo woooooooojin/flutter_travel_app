@@ -82,7 +82,13 @@ class _MapScreenState extends State<MapScreen> {
                             MaterialPageRoute(
                               builder: (_) => DetailScreen(
                                 city: cityList[index]!,
-                                info: info[cityList[index]!],
+                                info: info[cityList[index]!] as List<dynamic>,
+                                isCheckedIn: cityCheckList[index],
+                                onCheckInChanged: (bool value) {
+                                  setState(() {
+                                    cityCheckList[index] = value;
+                                  });
+                                },
                               ),
                             ),
                           );
