@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_korea_app/components/list_item.dart';
 
 class DetailScreen extends StatefulWidget {
   const DetailScreen({
@@ -63,36 +64,7 @@ class _DetailScreenState extends State<DetailScreen> {
               ),
             );
           }
-          return ListTile(
-            title: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  widget.info[index - 1]["name"] ?? "",
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Tooltip(
-                  triggerMode: TooltipTriggerMode.tap,
-                  message: widget.info[index - 1]["cost"] ?? "",
-                  child: const Icon(Icons.attach_money),
-                ),
-              ],
-            ),
-            subtitle: Text(
-                "${widget.info[index - 1]["description"] ?? ""}\n 위치 : ${widget.info[index - 1]["address"] ?? ""}\n비용: ${widget.info[index - 1]["cost"] ?? ""}"),
-            trailing: SizedBox(
-              width: 100,
-              height: 100,
-              child: Image.asset(
-                "assets/images/placeholder.jpeg",
-                fit: BoxFit.cover,
-              ),
-            ),
-          );
+          return ListItem(data: widget.info[index - 1]);
         },
         itemCount: widget.info.length + 1,
       ),
