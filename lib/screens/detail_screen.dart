@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_korea_app/components/list_item.dart';
 
@@ -19,11 +20,53 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
+  FirebaseDatabase database = FirebaseDatabase.instance;
+  DatabaseReference rootRef = FirebaseDatabase.instance.ref();
+  int checkInCount = 0;
   bool isCheckedIn = false;
+
+  void getCheckInCount() async {
+    if (!mounted) return;
+    final snapshot = await rootRef.get();
+    if (snapshot.exists) {
+      final data = snapshot.value as Map;
+      setState(() {
+        checkInCount = data[widget.city] ?? 0;
+      });
+    }
+  }
+
+  void incrementCheckInCount() async {
+    if (!mounted) return;
+    rootRef.child(widget.city).set(
+          ServerValue.increment(1),
+        );
+  }
+
+  void decrementCheckInCount() async {
+    if (!mounted) return;
+    rootRef.child(widget.city).set(
+          ServerValue.increment(-1),
+        );
+  }
+
   @override
   void initState() {
     super.initState();
     isCheckedIn = widget.isCheckedIn;
+    getCheckInCount();
+    rootRef.onValue.listen((DatabaseEvent event) {
+      if (!mounted) return;
+      final data = event.snapshot.value as Map;
+      setState(() {
+        checkInCount = data[widget.city] ?? 0;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -41,9 +84,9 @@ class _DetailScreenState extends State<DetailScreen> {
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Column(
                 children: [
-                  const Text(
-                    '현재 체크인한 사람 0명',
-                    style: TextStyle(
+                  Text(
+                    '현재 체크인한 사람 $checkInCount명',
+                    style: const TextStyle(
                       fontSize: 20,
                     ),
                   ),
@@ -60,6 +103,11 @@ class _DetailScreenState extends State<DetailScreen> {
                           widget.onCheckInChanged(
                             value,
                           );
+                          if (value) {
+                            incrementCheckInCount();
+                          } else {
+                            decrementCheckInCount();
+                          }
                         },
                       ),
                       const Text(
