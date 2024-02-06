@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "184480730821",
+    "project_id": "flutter-travel-9fb72",
+    "storage_bucket": "flutter-travel-9fb72.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184480730821:android:ea0347a6f554a4d498eaac",
+        "android_client_info": {
+          "package_name": "com.example.travel_korea_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLIjiTWhix5IqbAb-Z88mWizJPfu1FVjs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -39,26 +39,36 @@ class _DetailScreenState extends State<DetailScreen> {
           if (index == 0) {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
+              child: Column(
                 children: [
-                  Switch(
-                    value: isCheckedIn,
-                    onChanged: (bool value) {
-                      setState(() {
-                        isCheckedIn = value;
-                      });
-                      widget.onCheckInChanged(
-                        value,
-                      );
-                    },
-                  ),
                   const Text(
-                    '체크인',
+                    '현재 체크인한 사람 0명',
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 20,
                     ),
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Switch(
+                        value: isCheckedIn,
+                        onChanged: (bool value) {
+                          setState(() {
+                            isCheckedIn = value;
+                          });
+                          widget.onCheckInChanged(
+                            value,
+                          );
+                        },
+                      ),
+                      const Text(
+                        '체크인',
+                        style: TextStyle(
+                          fontSize: 24,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
